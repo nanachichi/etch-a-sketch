@@ -9,6 +9,9 @@
     <script src="script.js" defer></script>
   </head>
   <body>
-    <div class="grid"></div>
+    <!-- oncontextmenu="return false;" to disable right click menu opening -->
+    <!-- ondragstart="return false;" ondrop="return false;" to disable drag and drop  -->
+    <!-- because when drawing sometimes browser thinks you want to drag and drop  -->
+    <div class="grid" oncontextmenu="return false;" ondragstart="return false;" ondrop="return false;"></div>
   </body>
 </html>
