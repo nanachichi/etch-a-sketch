@@ -9,14 +9,22 @@ body {
 
 .grid {
   display: flex;
-  border-top: 1px solid #777;
-  border-left: 1px solid #777;
+  border-top: 1px solid #aaaaaa;
+  border-left: 1px solid #aaaaaa;
+  height: 720px;
+  width: 720px;
+  flex-shrink: 0;
+}
+
+.x {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .y {
   background-color: white;
-  width: 20px;
-  height: 20px;
-  border-bottom: 1px solid #777;
-  border-right: 1px solid #777;
+  border-bottom: 1px solid #aaaaaa;
+  border-right: 1px solid #aaaaaa;
+  flex: 1;
 }
