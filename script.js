@@ -97,3 +97,12 @@ function toggleGrid() {
     }
   });
 }
+
+
+function clearGrid() {
+  const cells = document.querySelectorAll('.y');
+  cells.forEach(c => {
+    c.style.backgroundColor = "";
+    c.style.opacity = "";
+  });
+}
