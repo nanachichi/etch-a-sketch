@@ -5,6 +5,7 @@ let y = 16;
 const grid = document.querySelector('.grid');
 
 function generateGrid(x, y) {
+  grid.innerHTML = "";
   for (let i = 0; i < x; i++) {
     const xDiv = document.createElement('div');
     xDiv.classList.add('x');
@@ -15,15 +16,15 @@ function generateGrid(x, y) {
       xDiv.appendChild(yDiv);
     }
   }
+  draw('red');
 }
 
 generateGrid(x, y);
 
 
-const cell = document.querySelectorAll('.y');
-
 function draw(color) {
-  cell.forEach(c => {
+  const cells = document.querySelectorAll('.y');
+  cells.forEach(c => {
     // To draw on the first hovered cell because mouseover triggers on e.buttons === 0
     c.addEventListener('mousedown', (e) => {
       // To prevent drawing if RMB
@@ -65,4 +66,14 @@ function draw(color) {
   });
 }
 
-draw('red');
+const inputBox = document.querySelector('.input');
+
+function generateNewGrid() {
+  let value = Number(inputBox.value);
+  if (isNaN(value) || value < 1 || value > 100) {
+    console.log("You should type a number between 1 and 100.")
+  } else {
+    generateGrid(value, value);
+  }
+  inputBox.value = "";
+}
