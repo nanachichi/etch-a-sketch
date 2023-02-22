@@ -66,16 +66,24 @@ function draw(color) {
   });
 }
 
-const inputBox = document.querySelector('.input');
+
+const output = document.getElementById('value');
+const slider = document.getElementById('myRange');
+
+output.innerHTML = `${slider.value}x${slider.value}`;
+
+slider.addEventListener("input", (e) => { 
+  output.innerHTML = `${e.target.value}x${e.target.value}`;
+});
+
 
 function generateNewGrid() {
-  let value = Number(inputBox.value);
+  let value = Number(slider.value);
   if (isNaN(value) || value < 1 || value > 100) {
     console.log("You should type a number between 1 and 100.")
   } else {
     generateGrid(value, value);
   }
-  inputBox.value = "";
 
   grid.style.borderRight = "none";
   grid.style.borderBottom = "none";
