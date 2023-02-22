@@ -5,27 +5,52 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Etch-A-Sketch</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <div class="tools">
-      <div class="new-grid">
-        <form class="form">
-          <input type="text" class="input" placeholder="1-100" />
-          <button onclick="generateNewGrid()" type="button">New Grid</button>
-        </form>
+    <div class="header"><h1>Etch-A-Sketch</h1></div>
+    <div class="content">
+      <div class="tools">
+        <button>Brush</button>
+        <button>Eyedropper</button>
+        <button>Background Color</button>
+        <button onclick="clearGrid()">Clear</button>
+        <button onclick="toggleGrid()">Toggle Grid</button>
+        <button class="download">Download</button>
       </div>
-      <button>Brush</button>
-      <button>Eyedropper</button>
-      <button>Background Color</button>
-      <button onclick="clearGrid()">Clear</button>
-      <button onclick="toggleGrid()">Toggle Grid</button>
-      <button class="download">Download</button>
+      <!-- MIDDLE CONTENT -->
+      <div class="middle">
+        <div class="slider-container">
+          <input
+            type="range"
+            min="1"
+            max="100"
+            value="16"
+            class="slider"
+            id="myRange"
+          />
+          <span id="value"></span>
+          <button onclick="generateNewGrid()" type="button">APPLY</button>
+        </div>
+        <!-- oncontextmenu="return false;" to disable right click menu opening -->
+        <!-- ondragstart="return false;" ondrop="return false;" to disable drag and drop  -->
+        <!-- because when drawing sometimes browser thinks you want to drag and drop  -->
+        <div
+          class="grid"
+          oncontextmenu="return false;"
+          ondragstart="return false;"
+          ondrop="return false;"
+        ></div>
+        <button onclick="download()">DOWNLOAD</button>
+      </div>
+      <div class="flex-grow-right"></div>
+      <!-- MIDDLE CONTENT -->
     </div>
-    <!-- oncontextmenu="return false;" to disable right click menu opening -->
-    <!-- ondragstart="return false;" ondrop="return false;" to disable drag and drop  -->
-    <!-- because when drawing sometimes browser thinks you want to drag and drop  -->
-    <div class="grid" oncontextmenu="return false;" ondragstart="return false;" ondrop="return false;"></div>
+    <div class="footer">Some footer</div>
   </body>
 </html>
