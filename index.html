@@ -16,12 +16,14 @@
     <div class="header"><h1>Etch-A-Sketch</h1></div>
     <div class="content">
       <div class="tools">
-        <button>Brush</button>
+        <div class="colors">
+          <input type="color" id="color-picker"/>
+          <input type="color" id="previous-color"/>
+        </div>
         <button>Eyedropper</button>
-        <button>Background Color</button>
+        <button onclick="changeBackgroundColor()">Background Color</button>
         <button onclick="clearGrid()">Clear</button>
         <button onclick="toggleGrid()">Toggle Grid</button>
-        <button class="download">Download</button>
       </div>
       <!-- MIDDLE CONTENT -->
       <div class="middle">
@@ -35,7 +37,7 @@
             id="myRange"
           />
           <span id="value"></span>
-          <button onclick="generateNewGrid()" type="button">APPLY</button>
+          <button onclick="generateNewGrid()" class="btn">APPLY</button>
         </div>
         <!-- oncontextmenu="return false;" to disable right click menu opening -->
         <!-- ondragstart="return false;" ondrop="return false;" to disable drag and drop  -->
@@ -46,7 +48,6 @@
           ondragstart="return false;"
           ondrop="return false;"
         ></div>
-        <button onclick="download()">DOWNLOAD</button>
       </div>
       <div class="flex-grow-right"></div>
       <!-- MIDDLE CONTENT -->
