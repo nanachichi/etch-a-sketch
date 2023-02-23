@@ -23,6 +23,51 @@ body {
   width: 200px;
 }
 
+.colors {
+  position: relative;
+  width: 50%;
+  height: 50%;
+}
+
+#color-picker,
+#previous-color {
+  appearance: none;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  background-color: #fff;
+  cursor: pointer;
+  box-shadow: 2px 8px 13px -3px #747272bf;
+  
+}
+
+#color-picker {
+  position: relative;
+  z-index: 2;
+}
+
+#previous-color {
+  position: relative;
+  top: -35px;
+  left: 15px;
+  z-index: 1;
+}
+
+#color-picker::-webkit-color-swatch,
+#previous-color::-webkit-color-swatch,
+#color-picker::-webkit-color-swatch-wrapper,
+#previous-color::-webkit-color-swatch-wrapper {
+  border-radius: 50%;
+  border: none;
+}
+
+#color-picker::-moz-color-swatch,
+#previous-color::-moz-color-swatch {
+  border-radius: 50%;
+  border: none;
+}
+
 .middle {
   display: flex;
   flex-direction: column;
@@ -59,18 +104,22 @@ body {
   box-shadow: 0 4px #9b85bd;
 }
 
+.middle button:hover {
+  background-color: #b496b4;
+  box-shadow: 0 4px #75698a;
+}
+
+.middle .slider::-webkit-slider-thumb:hover {
+  background-color: #b496b4;
+}
+
+.middle .slider::-moz-range-thumb:hover {
+  background-color: #b496b4;
+}
+
 .middle button:active {
   box-shadow: 0 2px #75698a;
   transform: translateY(4px);
-}
-
-.middle button:hover {
-  box-shadow: #9b85bd;
-}
-
-.slider::-webkit-slider-thumb:hover,
-button:hover {
-  background-color: #b496b4;
 }
 
 #value {
@@ -90,8 +139,6 @@ button:hover {
   appearance: none;
   border-radius: 25px;
   box-shadow: 2px 8px 13px -3px #747272bf;
-  -webkit-box-shadow: 2px 8px 13px -3px #747272bf;
-  -moz-box-shadow: 2px 8px 13px -3px #747272bf;
 }
 
 .slider::-webkit-slider-thumb {
@@ -102,8 +149,18 @@ button:hover {
   background-color: #6b3abb;
   border-radius: 50%;
   box-shadow: 2px 8px 13px -3px #747272bf;
-  -webkit-box-shadow: 2px 8px 13px -3px #747272bf;
-  -moz-box-shadow: 2px 8px 13px -3px #747272bf;
+  transition-duration: 0.1s;
+}
+
+.slider::-moz-range-thumb {
+  cursor: pointer;
+  appearance: none;
+  height: 20px;
+  width: 20px;
+  background-color: #6b3abb;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 2px 8px 13px -3px #747272bf;
   transition-duration: 0.1s;
 }
 
@@ -119,8 +176,6 @@ button:hover {
   background-color: #fff;
   box-sizing: border-box;
   box-shadow: 6px 10px 20px -1px #747272bf;
-  -webkit-box-shadow: 6px 10px 20px -1px #747272bf;
-  -moz-box-shadow: 6px 10px 20px -1px #747272bf;
 }
 
 .x {
