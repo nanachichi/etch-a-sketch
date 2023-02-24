@@ -19,18 +19,40 @@ body {
 .tools {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
   width: 200px;
+  gap: 1em;
 }
 
 .colors {
-  position: relative;
-  width: 50%;
-  height: 50%;
+  display: flex;
+  width: 300px;
+  height: 75px;
+  gap: 1em;
+  border: none;
+  border-radius: 50px;
+  box-shadow: 2px 8px 13px -3px #747272bf;
+  background-color: #6b3abb;
+  transition-duration: 0.1s;
+}
+
+.colors:hover {
+  background-color: #b496b4;
+}
+
+.brush-color,
+.back-color {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  font-weight: 700;
+  color: #fff;
 }
 
 #color-picker,
-#previous-color {
+#background-color {
   appearance: none;
   width: 50px;
   height: 50px;
@@ -39,31 +61,20 @@ body {
   background-color: #fff;
   cursor: pointer;
   box-shadow: 2px 8px 13px -3px #747272bf;
+  margin: 10px;
   
 }
 
-#color-picker {
-  position: relative;
-  z-index: 2;
-}
-
-#previous-color {
-  position: relative;
-  top: -35px;
-  left: 15px;
-  z-index: 1;
-}
-
 #color-picker::-webkit-color-swatch,
-#previous-color::-webkit-color-swatch,
+#background-color::-webkit-color-swatch,
 #color-picker::-webkit-color-swatch-wrapper,
-#previous-color::-webkit-color-swatch-wrapper {
+#background-color::-webkit-color-swatch-wrapper {
   border-radius: 50%;
   border: none;
 }
 
 #color-picker::-moz-color-swatch,
-#previous-color::-moz-color-swatch {
+#background-color::-moz-color-swatch {
   border-radius: 50%;
   border: none;
 }
@@ -73,7 +84,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 2em;
-  margin: 0 2em;
+  margin: 0 10em;
 }
 
 .flex-grow-right {
@@ -89,7 +100,8 @@ body {
   justify-content: center;
 }
 
-.middle button {
+.middle button,
+.tools button {
   display: flex;
   justify-content: center;
   width: 100px;
@@ -104,7 +116,8 @@ body {
   box-shadow: 0 4px #9b85bd;
 }
 
-.middle button:hover {
+.middle button:hover,
+.tools button:hover {
   background-color: #b496b4;
   box-shadow: 0 4px #75698a;
 }
@@ -117,7 +130,8 @@ body {
   background-color: #b496b4;
 }
 
-.middle button:active {
+.middle button:active,
+.tools button:active {
   box-shadow: 0 2px #75698a;
   transform: translateY(4px);
 }

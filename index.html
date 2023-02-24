@@ -17,11 +17,17 @@
     <div class="content">
       <div class="tools">
         <div class="colors">
-          <input type="color" id="color-picker"/>
-          <input type="color" id="previous-color"/>
+          <div class="brush-color">
+            <input type="color" id="color-picker"/>
+            <label for="color-picker">BRUSH</label>
+          </div>
+          <div class="back-color">
+            <input type="color" id="background-color"/>
+            <label for="background-color">BACKGROUND <br/>COLOR</label>
+          </div>
         </div>
         <button>Eyedropper</button>
-        <button onclick="changeBackgroundColor()">Background Color</button>
+        <button onclick="erase()">Eraser</button>
         <button onclick="clearGrid()">Clear</button>
         <button onclick="toggleGrid()">Toggle Grid</button>
       </div>
