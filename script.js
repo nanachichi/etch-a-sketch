@@ -13,58 +13,94 @@ function generateGrid(x, y) {
     for (let j = 0; j < y; j++) {
       const yDiv = document.createElement('div');
       yDiv.classList.add('y');
+      yDiv.classList.add('background');
       xDiv.appendChild(yDiv);
     }
   }
-  draw('red');
 }
 
 generateGrid(x, y);
 
+const colorPicker = document.getElementById('color-picker');
+const backgroundColor = document.getElementById('background-color');
 
-function draw(color) {
+const defaultBrushColor = '#000000';
+const defaultBackgroundColor = '#ffffff';
+
+colorPicker.value = defaultBrushColor;
+backgroundColor.value = defaultBackgroundColor;
+
+
+function draw() {
+
+  colorPicker.addEventListener("input", (e) => {
+    colorPicker.value = e.target.value;
+  });
+
   const cells = document.querySelectorAll('.y');
   cells.forEach(c => {
-    // To draw on the first hovered cell because mouseover triggers on e.buttons === 0
+
+    if (c.classList.contains('background')) {
+      c.style.backgroundColor = backgroundColor.value;
+    }
+    backgroundColor.addEventListener("input", () => {
+      if (c.classList.contains('background')) {
+        c.style.backgroundColor = backgroundColor.value;
+      }
+    });
+  
+    // To draw a cell
     c.addEventListener('mousedown', (e) => {
       // To prevent drawing if RMB
       if (e.buttons !== 2) {
-        e.target.style.backgroundColor = color;
+        e.target.classList.remove('background');
+        e.target.classList.add('foreground');
+        e.target.style.backgroundColor = colorPicker.value;
         e.target.style.opacity = "1";
-      // To clear on the first hovered cell
+      // To erase a cell
       } else if (e.buttons === 2) {
-        e.target.style.backgroundColor = "";
+        e.target.classList.remove('foreground');
+        e.target.classList.add('background');
+        e.target.style.backgroundColor = backgroundColor.value;
         e.target.style.opacity = "";
       }
     });
     c.addEventListener('mouseover', (e) => {
       // To draw when LMB is down and you're hovering the cell
       if (e.buttons === 1) {
-        e.target.style.backgroundColor = color;
+        e.target.classList.remove('background');
+        e.target.classList.add('foreground');
+        e.target.style.backgroundColor = colorPicker.value;
         e.target.style.opacity = "1";
-      // To show that a cell is being selected
+      // To show that a cell is being selected when hovered
       } else if (e.buttons === 0) {
         // To prevent it drawing over already drawn cell
-        if (e.target.style.opacity !== "1") {
-          e.target.style.backgroundColor = color;
-          e.target.style.opacity = "0.25";
+        if (e.target.classList.contains('background')) {
+          e.target.classList.add('hovered');
+          e.target.style.backgroundColor = colorPicker.value;
+          e.target.style.opacity = "0.5";
         }
-        // To unselect the cell
+        // To unselect the cell when unhovered
         c.addEventListener('mouseout', (e) => {
           // To prevent it clearing already drawn cell
-          if (e.target.style.opacity !== "1") {
-            e.target.style.backgroundColor = "";
+          e.target.classList.remove('hovered');
+          if (e.target.classList.contains('background')) {
+            e.target.style.backgroundColor = backgroundColor.value;
             e.target.style.opacity = "";
           }
         });
-      // To clear when RMB is down and you're hovering the cell
+      // To erase when RMB is down and you're hovering the cell
       } else if (e.buttons === 2) {
-        e.target.style.backgroundColor = "";
+        e.target.classList.remove('foreground');
+        e.target.classList.add('background');
+        e.target.style.backgroundColor = backgroundColor.value;
         e.target.style.opacity = "";
       }
     });
   });
 }
+
+draw();
 
 
 const output = document.getElementById('value');
@@ -79,14 +115,12 @@ slider.addEventListener("input", (e) => {
 
 function generateNewGrid() {
   let value = Number(slider.value);
-  if (isNaN(value) || value < 1 || value > 100) {
-    console.log("You should type a number between 1 and 100.")
-  } else {
-    generateGrid(value, value);
-  }
+  generateGrid(value, value);
 
   grid.style.borderRight = "none";
   grid.style.borderBottom = "none";
+
+  draw(colorPicker.value);
 }
 
 
@@ -110,7 +144,11 @@ function toggleGrid() {
 function clearGrid() {
   const cells = document.querySelectorAll('.y');
   cells.forEach(c => {
-    c.style.backgroundColor = "";
+    if (c.classList.contains('foreground')) {
+      c.classList.remove('foreground');
+      c.classList.add('background');
+    }
+    c.style.backgroundColor = backgroundColor.value;
     c.style.opacity = "";
   });
 }
