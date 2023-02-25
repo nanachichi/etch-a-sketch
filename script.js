@@ -31,6 +31,40 @@ colorPicker.value = defaultBrushColor;
 backgroundColor.value = defaultBackgroundColor;
 
 
+function fillBox(e) {
+  e.target.classList.remove('background');
+  e.target.classList.add('foreground');
+  e.target.style.backgroundColor = colorPicker.value;
+  e.target.style.opacity = "1";
+}
+
+function clearBox(e) {
+  e.target.classList.remove('foreground');
+  e.target.classList.add('background');
+  e.target.style.backgroundColor = backgroundColor.value;
+  e.target.style.opacity = "";
+}
+
+function hoverBox(e) {
+  if (e.target.classList.contains('background')) { // Don't draw on a foreground (drawn) cell
+    e.target.classList.add('hovered');
+    e.target.style.backgroundColor = colorPicker.value;
+    e.target.style.opacity = "0.5";
+  }
+}
+
+function unhoverBox(e) {
+  if (e.target.classList.contains('background')) { // Don't clear a foreground (drawn) cell
+    e.target.classList.remove('hovered');
+    e.target.style.backgroundColor = backgroundColor.value;
+    e.target.style.opacity = "";
+  }
+}
+
+
+let currentState = "drawing";
+
+
 function draw() {
 
   colorPicker.addEventListener("input", (e) => {
@@ -39,7 +73,6 @@ function draw() {
 
   const cells = document.querySelectorAll('.y');
   cells.forEach(c => {
-
     if (c.classList.contains('background')) {
       c.style.backgroundColor = backgroundColor.value;
     }
@@ -48,53 +81,44 @@ function draw() {
         c.style.backgroundColor = backgroundColor.value;
       }
     });
-  
-    // To draw a cell
+
     c.addEventListener('mousedown', (e) => {
-      // To prevent drawing if RMB
-      if (e.buttons !== 2) {
-        e.target.classList.remove('background');
-        e.target.classList.add('foreground');
-        e.target.style.backgroundColor = colorPicker.value;
-        e.target.style.opacity = "1";
-      // To erase a cell
-      } else if (e.buttons === 2) {
-        e.target.classList.remove('foreground');
-        e.target.classList.add('background');
-        e.target.style.backgroundColor = backgroundColor.value;
-        e.target.style.opacity = "";
+      if (currentState === "drawing") {
+        // Draw when LMB is down
+        if (e.buttons === 1) {
+          fillBox(e);
+        // To erase a cell
+        } else if (e.buttons === 2) {
+          clearBox(e);
+        }
+
+      } else if (currentState === "erasing") {
+        clearBox(e);
       }
     });
     c.addEventListener('mouseover', (e) => {
-      // To draw when LMB is down and you're hovering the cell
-      if (e.buttons === 1) {
-        e.target.classList.remove('background');
-        e.target.classList.add('foreground');
-        e.target.style.backgroundColor = colorPicker.value;
-        e.target.style.opacity = "1";
-      // To show that a cell is being selected when hovered
-      } else if (e.buttons === 0) {
-        // To prevent it drawing over already drawn cell
-        if (e.target.classList.contains('background')) {
-          e.target.classList.add('hovered');
-          e.target.style.backgroundColor = colorPicker.value;
-          e.target.style.opacity = "0.5";
+      if (currentState === "drawing") {
+        // Draw when LMB is down
+        if (e.buttons === 1) {
+          fillBox(e);
+
+        // Hovering
+        } else if (e.buttons === 0) {
+          hoverBox(e);
+          // Unhovering
+          c.addEventListener('mouseout', (e) => {
+            unhoverBox(e);
+          });
+
+        // Erase when RMB is down
+        } else if (e.buttons === 2) {
+          clearBox(e);
         }
-        // To unselect the cell when unhovered
-        c.addEventListener('mouseout', (e) => {
-          // To prevent it clearing already drawn cell
-          e.target.classList.remove('hovered');
-          if (e.target.classList.contains('background')) {
-            e.target.style.backgroundColor = backgroundColor.value;
-            e.target.style.opacity = "";
-          }
-        });
-      // To erase when RMB is down and you're hovering the cell
-      } else if (e.buttons === 2) {
-        e.target.classList.remove('foreground');
-        e.target.classList.add('background');
-        e.target.style.backgroundColor = backgroundColor.value;
-        e.target.style.opacity = "";
+
+      } else if (currentState === "erasing") {
+        if (e.buttons === 1) {
+          clearBox(e);
+        }
       }
     });
   });
@@ -151,4 +175,15 @@ function clearGrid() {
     c.style.backgroundColor = backgroundColor.value;
     c.style.opacity = "";
   });
+}
+
+const eraser = document.getElementById('eraser');
+
+function erase() {
+  eraser.classList.toggle('active');
+  if (eraser.classList.contains('active')) {
+    currentState = "erasing";
+  } else {
+    currentState = "drawing";
+  }
 }
