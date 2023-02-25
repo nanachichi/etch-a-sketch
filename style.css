@@ -104,7 +104,7 @@ body {
 .tools button {
   display: flex;
   justify-content: center;
-  width: 100px;
+  width: 120px;
   padding: 10px;
   color: #fff;
   background-color: #6b3abb;
@@ -133,6 +133,12 @@ body {
 .middle button:active,
 .tools button:active {
   box-shadow: 0 2px #75698a;
+  transform: translateY(4px);
+}
+
+.active {
+  background-color: #b496b4!important;
+  box-shadow: 0 2px #75698a!important;
   transform: translateY(4px);
 }
 
