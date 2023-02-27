@@ -27,16 +27,19 @@ const backgroundColor = document.getElementById('background-color');
 const defaultBrushColor = '#000000';
 const defaultBackgroundColor = '#ffffff';
 
+let colorPickerValue;
 colorPicker.value = defaultBrushColor;
+colorPickerValue = colorPicker.value;
 backgroundColor.value = defaultBackgroundColor;
 
 
-function fillBox(e) {
+function fillBox(e, colorPickerValue) {
   e.target.classList.remove('background');
   e.target.classList.add('foreground');
-  e.target.style.backgroundColor = colorPicker.value;
+  e.target.style.backgroundColor = colorPickerValue;
   e.target.style.opacity = "1";
 }
+
 
 function clearBox(e) {
   e.target.classList.remove('foreground');
@@ -45,13 +48,15 @@ function clearBox(e) {
   e.target.style.opacity = "";
 }
 
-function hoverBox(e) {
+
+function hoverBox(e, colorPickerValue) {
   if (e.target.classList.contains('background')) { // Don't draw on a foreground (drawn) cell
     e.target.classList.add('hovered');
-    e.target.style.backgroundColor = colorPicker.value;
+    e.target.style.backgroundColor = colorPickerValue;
     e.target.style.opacity = "0.5";
   }
 }
+
 
 function unhoverBox(e) {
   if (e.target.classList.contains('background')) { // Don't clear a foreground (drawn) cell
@@ -62,6 +67,49 @@ function unhoverBox(e) {
 }
 
 
+function eyedropBox(e) {
+  let rgb = e.target.style.backgroundColor;
+  let hex = convertToHex(rgb);
+  colorPicker.value = hex;
+  colorPickerValue = colorPicker.value;
+  eyedropper.classList.toggle('active');
+  currentState = "drawing";
+}
+
+
+function randomColorValue() {
+  let rgb = randomRgb();
+  let hex = convertToHex(rgb);
+  colorPicker.value = hex;
+  return colorPicker.value;
+}
+
+
+function convertToHex(rgb) {
+  let rgbSliced = rgb.slice(4, rgb.length - 1);
+  let rgbSplit = rgbSliced.split(', ');
+  let rgbHexed = rgbSplit.map(x => Number(x).toString(16));
+  let newRgbHexed = rgbHexed.map(part => {
+    if (part.length === 1) {
+      return part = "0" + part;
+    } else {
+      return part;
+    }
+  });
+  return '#' + newRgbHexed.join('');
+}
+
+
+function randomRgb() {
+  let rgbArr = [];
+  for (let i = 0; i < 3; i++) {
+    let rgbValue = Math.floor(Math.random() * 256);
+    rgbArr.push(rgbValue);
+  }
+  return 'rgb(' + rgbArr.join(', ') + ')';
+}
+
+
 let currentState = "drawing";
 
 
@@ -69,6 +117,7 @@ function draw() {
 
   colorPicker.addEventListener("input", (e) => {
     colorPicker.value = e.target.value;
+    colorPickerValue = colorPicker.value;
   });
 
   const cells = document.querySelectorAll('.y');
@@ -86,25 +135,34 @@ function draw() {
       if (currentState === "drawing") {
         // Draw when LMB is down
         if (e.buttons === 1) {
-          fillBox(e);
+          fillBox(e, colorPickerValue);
         // To erase a cell
         } else if (e.buttons === 2) {
           clearBox(e);
         }
-
+      } else if (currentState === "randomColor") {
+        // Draw when LMB is down
+        if (e.buttons === 1) {
+          colorPickerValue = randomColorValue();
+          fillBox(e, colorPickerValue);
+        // To erase a cell
+        } else if (e.buttons === 2) {
+          clearBox(e);
+        }
       } else if (currentState === "erasing") {
         clearBox(e);
+      } else if (currentState === "eyedropping") {
+        eyedropBox(e);
       }
     });
     c.addEventListener('mouseover', (e) => {
       if (currentState === "drawing") {
         // Draw when LMB is down
         if (e.buttons === 1) {
-          fillBox(e);
-
+          fillBox(e, colorPickerValue);
         // Hovering
         } else if (e.buttons === 0) {
-          hoverBox(e);
+          hoverBox(e, colorPickerValue);
           // Unhovering
           c.addEventListener('mouseout', (e) => {
             unhoverBox(e);
@@ -114,7 +172,22 @@ function draw() {
         } else if (e.buttons === 2) {
           clearBox(e);
         }
-
+      } else if (currentState === "randomColor") {
+        // Draw when LMB is down
+        if (e.buttons === 1) {
+          colorPickerValue = randomColorValue();
+          fillBox(e, colorPickerValue);
+        // Hovering
+        } else if (e.buttons === 0) {
+          hoverBox(e, colorPickerValue);
+          // Unhovering
+          c.addEventListener('mouseout', (e) => {
+            unhoverBox(e);
+          });
+        // Erase when RMB is down
+        } else if (e.buttons === 2) {
+          clearBox(e);
+        }
       } else if (currentState === "erasing") {
         if (e.buttons === 1) {
           clearBox(e);
@@ -177,12 +250,37 @@ function clearGrid() {
   });
 }
 
+
 const eraser = document.getElementById('eraser');
 
 function erase() {
   eraser.classList.toggle('active');
   if (eraser.classList.contains('active')) {
     currentState = "erasing";
+  } else {
+    currentState = "drawing";
+  }
+}
+
+
+const eyedropper = document.getElementById('eyedropper');
+
+function eyedrop() {
+  eyedropper.classList.toggle('active');
+  if (eyedropper.classList.contains('active')) {
+    currentState = "eyedropping";
+  } else {
+    currentState = "drawing";
+  }
+}
+
+
+const randomColor = document.getElementById('random');
+
+function random() {
+  randomColor.classList.toggle('active');
+  if (randomColor.classList.contains('active')) {
+    currentState = "randomColor";
   } else {
     currentState = "drawing";
   }
