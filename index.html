@@ -16,7 +16,7 @@
     <div class="header"><h1>Etch-A-Sketch</h1></div>
     <div class="content">
       <div class="tools">
-        <div class="colors">
+        <div class="colors" style="display: flex;">
           <div class="brush-color">
             <input type="color" id="color-picker"/>
             <label for="color-picker">BRUSH</label>
@@ -26,10 +26,33 @@
             <label for="background-color">BACKGROUND <br/>COLOR</label>
           </div>
         </div>
-        <button onclick="eyedrop()" id="eyedropper">EYEDROPPER</button>
-        <button onclick="erase()" id="eraser">ERASER</button>
-        <button onclick="clearGrid()">CLEAR</button>
-        <button onclick="toggleGrid()">TOGGLE GRID</button>
+        <div class="shader" style="display: none;">
+          <span id="shader-value">0%</span>
+          <div class="slider-container">
+            <span>LIGHTEN</span>
+            <input
+              type="range"
+              min="-25"
+              max="25"
+              value="0"
+              class="slider"
+              id="shader-slider"
+            />
+            <span>DARKEN</span>
+          </div>
+        </div>
+        <div class="full-column">
+          <div class="left-column">
+            <button onclick="shade()" id="shader">SHADER</button>
+            <button onclick="random()" id="random">RANDOM</button>
+            <button onclick="eyedrop()" id="eyedropper">EYEDROPPER</button>
+          </div>
+          <div class="right-column">
+            <button onclick="erase()" id="eraser">ERASER</button>
+            <button onclick="clearGrid()">CLEAR</button>
+            <button onclick="toggleGrid()">TOGGLE GRID</button>
+          </div>
+        </div>
       </div>
       <!-- MIDDLE CONTENT -->
       <div class="middle">
@@ -46,8 +69,8 @@
           <button onclick="generateNewGrid()" class="btn">APPLY</button>
         </div>
         <!-- oncontextmenu="return false;" to disable right click menu opening -->
-        <!-- ondragstart="return false;" ondrop="return false;" to disable drag and drop  -->
-        <!-- because when drawing sometimes browser thinks you want to drag and drop  -->
+        <!-- ondragstart="return false;" ondrop="return false;" to disable drag and drop -->
+        <!-- because when drawing sometimes browser thinks you want to drag and drop -->
         <div
           class="grid"
           oncontextmenu="return false;"
@@ -58,6 +81,6 @@
       <div class="flex-grow-right"></div>
       <!-- MIDDLE CONTENT -->
     </div>
-    <div class="footer">Some footer</div>
+    <div class="footer">Copyright © <span class="copyright"><a href="https://github.com/nanachichi">nanachichi</a></span> 2023</div>
   </body>
 </html>
