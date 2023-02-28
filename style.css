@@ -9,6 +9,27 @@ body {
   min-height: 100vh;
 }
 
+.header {
+  font-size: 25px;
+}
+
+.footer {
+  margin-top: 2em;
+  margin-bottom: 1em;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.footer .copyright {
+  color: #6b3abb;
+  transition-duration: 0.1s;
+  cursor: pointer;
+}
+
+.footer .copyright:hover {
+  color: #b496b4;
+}
+
 .content {
   display: flex;
   flex-wrap: wrap;
@@ -19,9 +40,20 @@ body {
 .tools {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 200px;
+  width: 300px;
+  gap: 1em;
+}
+
+.full-column {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 1em;
+}
+
+.left-column,
+.right-column {
+  display: flex;
+  flex-direction: column;
   gap: 1em;
 }
 
@@ -79,17 +111,40 @@ body {
   border: none;
 }
 
+.shader {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 300px;
+  height: 75px;
+  color: #b496b4;;
+  font-weight: 700;
+  gap: 1em;
+}
+
+.shader .slider-container {
+  display: flex;
+  margin-top: -2em;
+  margin-bottom: 0.5em;
+}
+
+.shader .slider {
+  width: 100px;
+  margin: 0 -1em;
+}
+
 .middle {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2em;
-  margin: 0 10em;
+  margin: 2em 5em;
 }
 
 .flex-grow-right {
   display: flex;
-  width: 200px;
+  width: 300px;
 }
 
 .slider-container {
@@ -122,11 +177,13 @@ body {
   box-shadow: 0 4px #75698a;
 }
 
-.middle .slider::-webkit-slider-thumb:hover {
+.middle .slider::-webkit-slider-thumb:hover,
+.shader .slider::-webkit-slider-thumb:hover {
   background-color: #b496b4;
 }
 
-.middle .slider::-moz-range-thumb:hover {
+.middle .slider::-moz-range-thumb:hover,
+.shader .slider::-moz-range-thumb:hover {
   background-color: #b496b4;
 }
 
@@ -148,7 +205,7 @@ body {
   align-items: center;
   width: 30px;
   text-align: center;
-  color: rgb(180, 150, 180);
+  color: #b496b4;
   font-size: 15px;
   font-weight: 700;
 }
@@ -209,4 +266,9 @@ body {
   border-bottom: 1px solid #aaaaaa;
   border-right: 1px solid #aaaaaa;
   flex: 1;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
