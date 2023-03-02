@@ -73,7 +73,7 @@ function eyedropBox(e) {
   let hex = convertToHex(rgb);
   colorPicker.value = hex;
   colorPickerValue = colorPicker.value;
-  eyedropper.classList.toggle('active');
+  eyedropperBtn.classList.toggle('active');
   currentState = "drawing";
 }
 
