@@ -248,13 +248,13 @@ function generateNewGrid() {
 function toggleGrid() {
   const cells = document.querySelectorAll('.y');
   cells.forEach(c => {
-    if (c.style.border === "none") {
+    if (c.style.border === "0px none") {
       grid.style.borderRight = "none";
       grid.style.borderBottom = "none";
       c.style.borderRight = "1px solid #aaaaaa";
       c.style.borderBottom = "1px solid #aaaaaa";
     } else {
-      c.style.border = "none";
+      c.style.border = "0 none";
       grid.style.borderRight = "1px solid #aaaaaa";
       grid.style.borderBottom = "1px solid #aaaaaa";
     }
