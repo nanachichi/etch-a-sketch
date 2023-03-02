@@ -28,6 +28,7 @@ const defaultBrushColor = '#000000';
 const defaultBackgroundColor = '#ffffff';
 
 let colorPickerValue;
+
 colorPicker.value = defaultBrushColor;
 colorPickerValue = colorPicker.value;
 backgroundColor.value = defaultBackgroundColor;
@@ -125,8 +126,6 @@ function randomRgb() {
 
 
 let currentState = "drawing";
-
-
 function draw() {
 
   colorPicker.addEventListener("input", (e) => {
@@ -225,18 +224,18 @@ function draw() {
 draw();
 
 
-const output = document.getElementById('value');
-const slider = document.getElementById('myRange');
+const gridValue = document.getElementById('grid-value');
+const gridSlider = document.getElementById('grid-slider');
 
-output.innerHTML = `${slider.value}x${slider.value}`;
+gridValue.innerHTML = `${gridSlider.value}x${gridSlider.value}`;
 
-slider.addEventListener("input", (e) => { 
-  output.innerHTML = `${e.target.value}x${e.target.value}`;
+gridSlider.addEventListener("input", (e) => { 
+  gridValue.innerHTML = `${e.target.value}x${e.target.value}`;
 });
 
 
 function generateNewGrid() {
-  let value = Number(slider.value);
+  let value = Number(gridSlider.value);
   generateGrid(value, value);
 
   grid.style.borderRight = "none";
@@ -276,11 +275,11 @@ function clearGrid() {
 }
 
 
-const eraser = document.getElementById('eraser');
+const eraserBtn = document.getElementById('eraser');
 
 function erase() {
-  eraser.classList.toggle('active');
-  if (eraser.classList.contains('active')) {
+  eraserBtn.classList.toggle('active');
+  if (eraserBtn.classList.contains('active')) {
     currentState = "erasing";
   } else {
     currentState = "drawing";
@@ -288,11 +287,11 @@ function erase() {
 }
 
 
-const eyedropper = document.getElementById('eyedropper');
+const eyedropperBtn = document.getElementById('eyedropper');
 
 function eyedrop() {
-  eyedropper.classList.toggle('active');
-  if (eyedropper.classList.contains('active')) {
+  eyedropperBtn.classList.toggle('active');
+  if (eyedropperBtn.classList.contains('active')) {
     currentState = "eyedropping";
   } else {
     currentState = "drawing";
@@ -300,16 +299,17 @@ function eyedrop() {
 }
 
 
-const randomColor = document.getElementById('random');
+const randomColorBtn = document.getElementById('random');
 
 function random() {
-  randomColor.classList.toggle('active');
-  if (randomColor.classList.contains('active')) {
+  randomColorBtn.classList.toggle('active');
+  if (randomColorBtn.classList.contains('active')) {
     currentState = "randomColor";
   } else {
     currentState = "drawing";
   }
 }
+
 
 const shaderBtn = document.getElementById('shader');
 const colorsDiv = document.querySelector('.colors');

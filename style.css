@@ -199,7 +199,7 @@ body {
   transform: translateY(4px);
 }
 
-#value {
+#grid-value {
   display: flex;
   justify-content: center;
   align-items: center;
